@@ -1,23 +1,21 @@
 import mysql.connector
-from mysql.connector import Error
 
 try:
-    # Connect to MySQL server
+    # Connect to the MySQL server
     connection = mysql.connector.connect(
         host="localhost",
         user="root",
-        password="isaac5480"
+        password="isaac5480",   # change to your root password
+        database="alx_book_store"
     )
 
     if connection.is_connected():
-        cursor = connection.cursor()
-        cursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store;")
-        print("Database 'alx_book_store' created successfully!")
+        print("Connected to MySQL database")
 
-except Error as e:
-    print("Error while connecting to MySQL:", e)
+except mysql.connector.Error as err:
+    print(f"Error: {err}")
 
 finally:
-    if connection.is_connected():
-        cursor.close()
+    if 'connection' in locals() and connection.is_connected():
         connection.close()
+        print("MySQL connection is closed")
